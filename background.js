@@ -52,10 +52,7 @@ function speak(utterance) {
       });
 }
 
-function myAlert(utterance) {
-  // var utterance = sel.toString();
-  alert(utterance); 
-}
+
 
 function initBackground() {
   loadContentScriptInAllTabs();
@@ -65,7 +62,11 @@ function initBackground() {
   if (keyString == undefined) {
     keyString = defaultKeyString;
     localStorage['speakKey'] = keyString;
+  }else{
+    keyString = defaultKeyString;
+    localStorage['speakKey'] = keyString;
   }
+
   sendKeyToAllTabs(keyString);
 
   chrome.extension.onRequest.addListener(
@@ -74,9 +75,7 @@ function initBackground() {
           sendResponse({'key': localStorage['speakKey']});
         } else if (request['speak']) {
           speak(request['speak']);
-        } else if (request['alert']) {
-          myAlert(request['alert']);
-        }
+        } 
       });
 
   chrome.browserAction.onClicked.addListener(

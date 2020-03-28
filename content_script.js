@@ -5,21 +5,43 @@
  */
 
 var speakKeyStr;
+var redKeyStr = "Option+1";
+var blueKeyStr = "Option+2";
 
-function speakSelection() {
+function speakSelection2() {
   var focused = document.activeElement;
   var sel ="none";
   var selectedText;
+
   if (focused) {
     try {
-      focused.value = "<font color=red>"+focused.value.substring(
-          focused.selectionStart, focused.selectionEnd)+"</font>";
+      var text = focused.value.substring(
+          focused.selectionStart, focused.selectionEnd);
+      focused.value = "222"+text+"</font>";
+    } catch (err) {
+    }
+  }
+
+}
+
+
+function speakSelection(color) {
+  var focused = document.activeElement;
+  var sel ="none";
+  var selectedText;
+
+  if (focused) {
+    try {
+      var text = focused.value.substring(
+          focused.selectionStart, focused.selectionEnd);
+      focused.value = "<font color="+color+">"+text+"</font>";
 
       // selectedText = focused.value.substring(
           // focused.selectionStart, focused.selectionEnd);
     } catch (err) {
     }
   }
+
   // if (selectedText == undefined) {
   //   var sel = window.getSelection();
   //   var selectedText = sel.toString();
@@ -41,7 +63,10 @@ function onExtensionMessage(request) {
     if (!document.hasFocus()) {
       return;
     }
-    speakSelection();
+    speakSelection("red");
+    // if keyStr == "Option+S"{
+      // alert(request['key']);
+    // }
   } else if (request['key'] != undefined) {
     speakKeyStr = request['key'];
   }
@@ -56,8 +81,14 @@ function initContentScript() {
       return true;
     }
     var keyStr = keyEventToString(evt);
-    if (keyStr == speakKeyStr && speakKeyStr.length > 0) {
-      speakSelection();
+    console.log(keyStr);
+    if (keyStr == redKeyStr && speakKeyStr.length > 0) {
+      speakSelection("red");
+      evt.stopPropagation();
+      evt.preventDefault();
+      return false;
+    } else if (keyStr == blueKeyStr && speakKeyStr.length > 0) {
+      speakSelection("blue");
       evt.stopPropagation();
       evt.preventDefault();
       return false;

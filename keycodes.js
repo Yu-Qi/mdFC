@@ -87,8 +87,8 @@ function keyEventToString(evt) {
 function getDefaultKeyString() {
   return keyEventToString({
     keyCode: 83,  // 's'
-    shiftKey: true,
+    shiftKey: false,
     altKey: true,
-    ctrlKey: true,
+    ctrlKey: false,
     metaKey: false});
 }
