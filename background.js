@@ -52,6 +52,10 @@ function speak(utterance) {
       });
 }
 
+function myAlert(utterance) {
+  alert(utterance); 
+}
+
 function initBackground() {
   loadContentScriptInAllTabs();
 
@@ -69,6 +73,8 @@ function initBackground() {
           sendResponse({'key': localStorage['speakKey']});
         } else if (request['speak']) {
           speak(request['speak']);
+        } else if (request['alert']) {
+          myAlert(request['alert']);
         }
       });
 

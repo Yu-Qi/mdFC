@@ -20,7 +20,7 @@ function speakSelection() {
     var sel = window.getSelection();
     var selectedText = sel.toString();
   }
-  chrome.extension.sendRequest({'speak': selectedText});
+  chrome.extension.sendRequest({'alert': selectedText});
 }
 
 function onExtensionMessage(request) {
