@@ -53,6 +53,7 @@ function speak(utterance) {
 }
 
 function myAlert(utterance) {
+  // var utterance = sel.toString();
   alert(utterance); 
 }
 

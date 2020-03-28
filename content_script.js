@@ -8,19 +8,32 @@ var speakKeyStr;
 
 function speakSelection() {
   var focused = document.activeElement;
+  var sel ="none";
   var selectedText;
   if (focused) {
     try {
-      selectedText = focused.value.substring(
-          focused.selectionStart, focused.selectionEnd);
+      focused.value = "<font color=red>"+focused.value.substring(
+          focused.selectionStart, focused.selectionEnd)+"</font>";
+
+      // selectedText = focused.value.substring(
+          // focused.selectionStart, focused.selectionEnd);
     } catch (err) {
     }
   }
-  if (selectedText == undefined) {
-    var sel = window.getSelection();
-    var selectedText = sel.toString();
-  }
-  chrome.extension.sendRequest({'alert': selectedText});
+  // if (selectedText == undefined) {
+  //   var sel = window.getSelection();
+  //   var selectedText = sel.toString();
+  //   var range = sel.getRangeAt(0);
+  //   var text = range.toString();
+  //   range.deleteContents();
+  //   range.insertNode(document.createTextNode( insertTexts[0]+text+insertTexts[1] ));
+  // chrome.extension.sendRequest({'alert': "good: "+selectedText});
+
+  // }
+  // else{
+  //   chrome.extension.sendRequest({'alert': "not catch: "+selectedText});
+
+  // }
 }
 
 function onExtensionMessage(request) {
