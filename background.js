@@ -20,36 +20,6 @@ function speak(utterance) {
     chrome.tts.stop();
     return;
   }
-
-  speaking = true;
-  lastUtterance = utterance;
-  globalUtteranceIndex++;
-  var utteranceIndex = globalUtteranceIndex;
-
-  chrome.browserAction.setIcon({path: 'SpeakSel19-active.png'});
-
-  var rate = localStorage['rate'] || 1.0;
-  var pitch = localStorage['pitch'] || 1.0;
-  var volume = localStorage['volume'] || 1.0;
-  var voice = localStorage['voice'];
-  chrome.tts.speak(
-      utterance,
-      {voiceName: voice,
-       rate: parseFloat(rate),
-       pitch: parseFloat(pitch),
-       volume: parseFloat(volume),
-       onEvent: function(evt) {
-         if (evt.type == 'end' ||
-             evt.type == 'interrupted' ||
-             evt.type == 'cancelled' ||
-             evt.type == 'error') {
-           if (utteranceIndex == globalUtteranceIndex) {
-             speaking = false;
-             chrome.browserAction.setIcon({path: 'SpeakSel19.png'});
-           }
-         }
-       }
-      });
 }
 
 
@@ -57,17 +27,25 @@ function speak(utterance) {
 function initBackground() {
   loadContentScriptInAllTabs();
 
-  var defaultKeyString = getDefaultKeyString();
-  var keyString = localStorage['speakKey'];
-  if (keyString == undefined) {
-    keyString = defaultKeyString;
-    localStorage['speakKey'] = keyString;
-  }else{
-    keyString = defaultKeyString;
-    localStorage['speakKey'] = keyString;
-  }
+  // sendKeyToAllTabs(keyString);
+  // var defaultKeyString = getDefaultKeyString();
+  // var keyString = localStorage['speakKey'];
+  // if (keyString == undefined) {
+  //   keyString = defaultKeyString;
+  //   localStorage['speakKey'] = keyString;
+  // }
+  // sendKeyToAllTabs(keyString);
+  var shortcut1 = localStorage['shortcut1'] || "Option+1";
+  var shortcut2 = localStorage['shortcut2'] || "Option+2";
+  var shortcut3 = localStorage['shortcut3'] || "Option+3";
+  var color1 = localStorage['color1'] || "red";
+  var color2 = localStorage['color2'] || "blue";
+  var color3 = localStorage['color3'] || "#F0B5A5";
+  let pair = [[shortcut1, color1], [shortcut2, color2], [shortcut3, color3]];
 
-  sendKeyToAllTabs(keyString);
+  for (const [index, element] of pair.entries()) {
+      mySendToAllTabs(element[0],element[1]);
+    };
 
   chrome.extension.onRequest.addListener(
       function(request, sender, sendResponse) {
