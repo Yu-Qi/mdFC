@@ -5,14 +5,12 @@
  */
 
 var speakKeyStr;
-var redKeyStr = "Option+1";
-var blueKeyStr = "Option+2";
+var k, c;
+var dict={};
 
 
 function speakSelection(color) {
   var focused = document.activeElement;
-  var sel ="none";
-  var selectedText;
 
   if (focused) {
     try {
@@ -20,8 +18,6 @@ function speakSelection(color) {
           focused.selectionStart, focused.selectionEnd);
       focused.value = "<font color="+color+">"+text+"</font>";
 
-      // selectedText = focused.value.substring(
-          // focused.selectionStart, focused.selectionEnd);
     } catch (err) {
     }
   }
@@ -37,6 +33,10 @@ function onExtensionMessage(request) {
 
   } else if (request['key'] != undefined) {
     speakKeyStr = request['key'];
+  } else if (request['k'] != undefined){
+    k = request['k'];
+    c = request['c'];
+    dict[k] = c;
   }
 }
 
@@ -50,17 +50,23 @@ function initContentScript() {
     }
     var keyStr = keyEventToString(evt);
     console.log(keyStr);
-    if (keyStr == redKeyStr && speakKeyStr.length > 0) {
-      speakSelection("red");
-      evt.stopPropagation();
-      evt.preventDefault();
-      return false;
-    } else if (keyStr == blueKeyStr && speakKeyStr.length > 0) {
-      speakSelection("blue");
+    console.log(dict);
+    if (keyStr in dict ) {
+      speakSelection(dict[keyStr]);
       evt.stopPropagation();
       evt.preventDefault();
       return false;
     }
+    // else if (keyStr == k ) {
+    //   // speakSelection("blue");
+    //   speakSelection(c);
+    //   // alert(localStorage['color2']);
+    //   // alert("window: "+test);
+
+    //   evt.stopPropagation();
+    //   evt.preventDefault();
+    //   return false;
+    // }
     return true;
   }, false);
 }

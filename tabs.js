@@ -3,6 +3,19 @@
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file.
  */
+function mySendToAllTabs(keyStr, color) {
+  chrome.windows.getAll({'populate': true}, function(windows) {
+    for (var i = 0; i < windows.length; i++) {
+      var tabs = windows[i].tabs;
+      for (var j = 0; j < tabs.length; j++) {
+        chrome.tabs.sendRequest(
+            tabs[j].id,
+            {'k': keyStr, 'c': color});
+      }
+    }
+  });
+}
+
 
 function sendKeyToAllTabs(keyStr) {
   chrome.windows.getAll({'populate': true}, function(windows) {
