@@ -1,7 +1,7 @@
 {
-  "name": "Speak Selection",
-  "version": "1.1",
-  "description": "Speaks the current selection out loud.",
+  "name": "mdFC",
+  "version": "1.0",
+  "description": "Set your shortcut and font color, and enjoy your hackmd",
   "permissions": [
     "<all_urls>",
     "tts",
@@ -17,8 +17,8 @@
   },
 
   "browser_action": {
-    "default_icon": "SpeakSel19.png",
-    "default_title": "Speak Selection"
+    "default_icon": "mdFC.png",
+    "default_title": "mdFC"
   },
 
   "options_page": "options.html",
@@ -28,7 +28,7 @@
   "content_scripts": [
     {
       "matches": [
-        "<all_urls>"
+        "https://hackmd.io/*"
       ],
       "all_frames": true,
       "js": [
@@ -39,11 +39,11 @@
   ],
 
   "icons": {
-    "16": "SpeakSel16.png",
-    "48": "SpeakSel48.png",
-    "128": "SpeakSel128.png",
-    "256": "SpeakSel256.png"
+    "16": "mdFC.png",
+    "48": "mdFC.png",
+    "128": "mdFC.png",
+    "256": "mdFC.png"
   },
 
-  "manifest_version": 2
+  "manifest_version": 1
 }

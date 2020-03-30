@@ -8,22 +8,6 @@ var speakKeyStr;
 var redKeyStr = "Option+1";
 var blueKeyStr = "Option+2";
 
-function speakSelection2() {
-  var focused = document.activeElement;
-  var sel ="none";
-  var selectedText;
-
-  if (focused) {
-    try {
-      var text = focused.value.substring(
-          focused.selectionStart, focused.selectionEnd);
-      focused.value = "222"+text+"</font>";
-    } catch (err) {
-    }
-  }
-
-}
-
 
 function speakSelection(color) {
   var focused = document.activeElement;
@@ -42,20 +26,6 @@ function speakSelection(color) {
     }
   }
 
-  // if (selectedText == undefined) {
-  //   var sel = window.getSelection();
-  //   var selectedText = sel.toString();
-  //   var range = sel.getRangeAt(0);
-  //   var text = range.toString();
-  //   range.deleteContents();
-  //   range.insertNode(document.createTextNode( insertTexts[0]+text+insertTexts[1] ));
-  // chrome.extension.sendRequest({'alert': "good: "+selectedText});
-
-  // }
-  // else{
-  //   chrome.extension.sendRequest({'alert': "not catch: "+selectedText});
-
-  // }
 }
 
 function onExtensionMessage(request) {
@@ -64,9 +34,7 @@ function onExtensionMessage(request) {
       return;
     }
     speakSelection("red");
-    // if keyStr == "Option+S"{
-      // alert(request['key']);
-    // }
+
   } else if (request['key'] != undefined) {
     speakKeyStr = request['key'];
   }
